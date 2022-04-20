@@ -1,14 +1,13 @@
-import React from 'react';
 import './App.css';
 import { Greetings } from './components/Greetings';
-import { Settings } from './components/Settings';
+import { Configuration } from './components/Configuration';
 
 const App = () => {
   return (
     <div className="App">
       <header className="App-header">
         <Greetings date={new Date()}/>
-        <Settings />
+        <Configuration />
       </header>
     </div>
   );
