@@ -8,6 +8,7 @@ import { AlarmConfig, getAlarm, setAlarm } from '../clients/Alarm'
 import { useQuery } from "react-query";
 
 export const Configuration = () => {
+  const [time, setTime] = useState(new Date())
   const [config, setConfig] = useState<AlarmConfig | null>(null);
 
   const { isLoading } = useQuery('alarm', getAlarm, {
@@ -20,6 +21,7 @@ export const Configuration = () => {
     console.log('NEW CONFIG', config)
     // useQuery('alarm', setAlarm(config))
     // store to server
+    setTime(config && config.timestamp.setHours(parseInt(config.time.split(':')[0]), parseInt(config.time.split(':')[1])) as any)
   }, [config])
 
   return (
@@ -28,11 +30,12 @@ export const Configuration = () => {
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <TimePicker
           label="Alarm"
-          value={config.timestamp.setHours(parseInt(config.time.split(':')[0]), parseInt(config.time.split(':')[1]))}
+          value={time}
           ampm={false}
           onChange={(date: string | null) => {
             setConfig({
               ...config,
+              timestamp: new Date(),
               time: (date as any).toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' })
             })
           }}
@@ -42,7 +45,7 @@ export const Configuration = () => {
       <IOSSwitch 
         checked={config.active} 
         onClick={() => {
-          config.active ? setConfig({ ...config, active: false }) : setConfig({ ...config, active: true })
+          setConfig({ ...config, active: !config.active })
         }}/>
     </> }
     
