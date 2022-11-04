@@ -27,26 +27,30 @@ export const Configuration = () => {
   return (
     <>
       { isLoading || !config ? <div>Loading...</div> : <>
+      <div style={{display: 'flex'}}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <TimePicker
-            label="Alarm"
-            value={time}
-            ampm={false}
-            onChange={(date: string | null) => {
-              setConfig({
-                ...config,
-                timestamp: new Date(),
-                time: (date as any).toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' })
-              })
-            }}
-            renderInput={(params: any) => <TextField {...params} />}
-          />
-        </LocalizationProvider>
-        <IOSSwitch 
-          checked={config.active} 
-          onClick={() => {
-            setConfig({ ...config, active: !config.active })
-          }}/>
+            <TimePicker
+              label="Alarm"
+              value={time}
+              ampm={false}
+              onChange={(date: string | null) => {
+                setConfig({
+                  ...config,
+                  timestamp: new Date(),
+                  time: (date as any).toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' })
+                })
+              }}
+              renderInput={(params: any) => <TextField {...params} />}
+            />
+          </LocalizationProvider>
+          <div style={{margin: 10, transform: 'scale(1.2)'}}>
+            <IOSSwitch 
+              checked={config.active} 
+              onClick={() => {
+                setConfig({ ...config, active: !config.active })
+              }}/>
+          </div>
+        </div>
         </> 
       }
     </>
