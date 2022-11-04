@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  raspberry-app:
+    container_name: raspberry-app
+    restart: unless-stopped
+    env_file:
+      - .env
+    build:
+      dockerfile: Dockerfile
+      context: ./
+    ports:
+      - 3000:80
